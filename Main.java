@@ -1,4 +1,3 @@
-package com.HuaWei;
 
 import java.util.*;
 class Node{
@@ -15,23 +14,23 @@ public class Main {
 	public static Node [] segTree;
 	public static int [] array;
 	public static Scanner input ;
-	// ¹¹ÔìÏß¶ÎÊ÷
+	// æ„é€ çº¿æ®µæ ‘
 	public static void buildSegmentTree(int begin ,int end ,int id){
 		segTree[id].l=begin;
 		segTree[id].r=end;
 		if(begin==end){
-			segTree[id].mx = array[begin]; /* Ö»ÓĞÒ»¸öÔªËØ,½Úµã¼ÇÂ¼¸Ãµ¥ÔªËØ */ 
+			segTree[id].mx = array[begin]; /* åªæœ‰ä¸€ä¸ªå…ƒç´ ,èŠ‚ç‚¹è®°å½•è¯¥å•å…ƒç´  */ 
 		}else{
-			//µİ¹é¹¹½¨×óÓÒ×ÓÊ÷
+			//é€’å½’æ„å»ºå·¦å³å­æ ‘
 			 int mid = (begin + end) / 2;
 			buildSegmentTree(begin,mid,id * 2);
 			buildSegmentTree(mid +1,end,id * 2 +1);
-			//»ØËİÊ± µÃµ½µ±Ç°node½ÚµãµÄÏß¶ÎĞÅÏ¢
+			//å›æº¯æ—¶ å¾—åˆ°å½“å‰nodeèŠ‚ç‚¹çš„çº¿æ®µä¿¡æ¯
 			segTree[id].mx= Math.max(segTree[id * 2].mx, segTree[id * 2 +1].mx);
 		}
 	}
-	// Çø¼ä¸üĞÂ
-	// ÆäÖĞPÎªÒª¸üĞÂµÄ½Úµã£¬addÎªĞèÒª¸ü¸ÄµÄÖµ£¬begin,endÎªµ±Ç°½Úµã´æ´¢µÄÇø¼ä£¬nodeÎªµ±Ç°½Úµã
+	// åŒºé—´æ›´æ–°
+	// å…¶ä¸­Pä¸ºè¦æ›´æ–°çš„èŠ‚ç‚¹ï¼Œaddä¸ºéœ€è¦æ›´æ”¹çš„å€¼ï¼Œbegin,endä¸ºå½“å‰èŠ‚ç‚¹å­˜å‚¨çš„åŒºé—´ï¼Œnodeä¸ºå½“å‰èŠ‚ç‚¹
 	public static void update(int p ,int add,int begin ,int end ,int id){
 		if(begin==end){
 			segTree[id].mx+=add;
@@ -44,8 +43,8 @@ public class Main {
 			update(p,add,m+1,end,id * 2 +1);
 		segTree[id].mx= segTree[id * 2].mx +segTree[id * 2 +1].mx;
 	}
-	// Çø¼ä²éÑ¯
-	//£¨ÆäÖĞnodeÎªµ±Ç°²éÑ¯½Úµã£¬begin,endÎªµ±Ç°½Úµã´æ´¢µÄÇø¼ä£¬left,rightÎª´Ë´Îquery´Ó´óµ½Ğ¡£©
+	// åŒºé—´æŸ¥è¯¢
+	//ï¼ˆå…¶ä¸­nodeä¸ºå½“å‰æŸ¥è¯¢èŠ‚ç‚¹ï¼Œbegin,endä¸ºå½“å‰èŠ‚ç‚¹å­˜å‚¨çš„åŒºé—´ï¼Œleft,rightä¸ºæ­¤æ¬¡queryä»å¤§åˆ°å°ï¼‰
 	public static int query(int id , int L ,int R){
 		if(segTree[id].r<L || segTree[id].l>R) return 0;
 		if (segTree[id].l>=L && segTree[id].r<=R)    
@@ -55,8 +54,8 @@ public class Main {
 	public static void main(String[] args) {
 		input= new Scanner(System.in);
 		while (input.hasNextInt()) {
-			int n = input.nextInt(); // »úÆ±µÄ×ÜÊı
-			int m = input.nextInt(); // Ñ¯ÎÊµÄ×ÜÊı
+			int n = input.nextInt(); // æœºç¥¨çš„æ€»æ•°
+			int m = input.nextInt(); // è¯¢é—®çš„æ€»æ•°
 			array= new int[100010];
 			segTree= new Node[400010];
 			for (int i = 0; i < 400010; i++) {
@@ -64,13 +63,13 @@ public class Main {
 				segTree[i]=node;
 			}
 			for (int i = 0; i < n; i++) {
-				int t = input.nextInt(); // Ê±¼ä
-				int v = input.nextInt(); // ¼Û¸ñ
+				int t = input.nextInt(); // æ—¶é—´
+				int v = input.nextInt(); // ä»·æ ¼
 				array[t]=v;
 			}
 			buildSegmentTree(1,100000, 1);
 			for (int i = 0; i < m; i++) {
-				int a = input.nextInt(); // Ñ¯ÎÊµÄÊ±¼äÇø¼ä
+				int a = input.nextInt(); // è¯¢é—®çš„æ—¶é—´åŒºé—´
 				int b = input.nextInt(); 
 				int res = query(1,a,b);
 				if(res==0){
